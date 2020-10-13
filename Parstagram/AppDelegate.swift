@@ -5,13 +5,14 @@
 //  Created by Kimberly Le on 10/4/20.
 //
 
+//app delegate is what runs when the user launches the app
 import UIKit
 import Parse
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
-
+    var window: UIWindow?
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         let parseConfig = ParseClientConfiguration {
@@ -22,10 +23,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Parse.initialize(with: parseConfig)
         
         // --- end copy
-
+        //check to see if the user is logged in
+            if PFUser.current() !=  nil{ //and if they are don't take them to the login page but take them to the navigation controller which has the view controller
+                let main = UIStoryboard(name: "Main", bundle: nil)
+                let feedNavigationController = main.instantiateViewController(withIdentifier: "FeedNavigationController") //this instantiates FeedNavigationController to have an instance of this nav controller
+                
+            
+                
+                window?.rootViewController = feedNavigationController //change the rootViewController to immediately show the feedNavController
+            
+            }
 
         return true
     }
+    
     
     // MARK: UISceneSession Lifecycle
 
